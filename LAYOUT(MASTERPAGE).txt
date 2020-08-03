@@ -1,0 +1,122 @@
+
+@{
+    ViewBag.Title = "_Layout";
+}
+
+    <script src="~/jquery.js"></script>
+    <link href="~/menu.css" rel="stylesheet" />
+    <script src="~/menu.js"></script>
+
+<table>
+    <tr>
+        <td>
+            <h2>Master Page</h2>
+        </td>
+    </tr>
+</table>
+
+
+<table style="width:100%">
+    <tr>
+        <td>
+            <img src="~/image/3DLUTmobile_20190920_072252.jpeg" width="200px" height="200px" />
+            <img src="~/image/3DLUTmobile_20190922_061348.jpeg" width="200px" height="200px" />
+            <img src="~/image/BeautyPlus_20200329070907243_save.jpg" width="200px" height="200px" />
+            <img src="~/image/IMG-20200104-WA0004.jpg" width="200px" height="200px" />
+            <img src="~/image/IMG-20200229-WA0004.jpg" width="200px" height="200px" />
+            <img src="~/image/IMG-20200324-WA0007.jpg" width="200px" height="200px" />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div id="menu">
+                <ul class="menu">
+                    <li>
+                        <a href="#" class="parent"><span>Home</span></a>
+                        <div>
+                            <ul>
+                                <li>
+                                    <a href="#" class="parent"><span>Sub Item 1</span></a>
+                                    <div>
+                                        <ul>
+                                            <li>
+                                                <a href="#" class="parent"><span>Sub Item 1.1</span></a>
+                                                <div>
+                                                    <ul>
+                                                        <li><a href="#"><span>Sub Item 1.1.1</span></a></li>
+                                                        <li><a href="#"><span>Sub Item 1.1.2</span></a></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                            <li><a href="#"><span>Sub Item 1.2</span></a></li>
+                                            <li><a href="#"><span>Sub Item 1.3</span></a></li>
+                                            <li><a href="#"><span>Sub Item 1.4</span></a></li>
+                                            <li><a href="#"><span>Sub Item 1.5</span></a></li>
+                                            <li><a href="#"><span>Sub Item 1.6</span></a></li>
+                                            <li>
+                                                <a href="#" class="parent"><span>Sub Item 1.7</span></a>
+                                                <div>
+                                                    <ul>
+                                                        <li><a href="#"><span>Sub Item 1.7.1</span></a></li>
+                                                        <li><a href="#"><span>Sub Item 1.7.2</span></a></li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><a href="#"><span>Sub Item 2</span></a></li>
+                                <li><a href="#"><span>Sub Item 3</span></a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#"><span>Product Info</span></a>
+                        <div>
+                            <ul>
+                                <li>
+                                    <a href="#" class="parent"><span>Sub Item 1</span></a>
+                                    <div>
+                                        <ul>
+                                            <li><a href="#"><span>Sub Item 1.1</span></a></li>
+                                            <li><a href="#"><span>Sub Item 1.2</span></a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="parent"><span>Sub Item 2</span></a>
+                                    <div>
+                                        <ul>
+                                            <li><a href="#"><span>Sub Item 2.1</span></a></li>
+                                            <li><a href="#"><span>Sub Item 2.2</span></a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><a href="#"><span>Sub Item 3</span></a></li>
+                                <li><a href="#"><span>Sub Item 4</span></a></li>
+                                <li><a href="#"><span>Sub Item 5</span></a></li>
+                                <li><a href="#"><span>Sub Item 6</span></a></li>
+                                <li><a href="#"><span>Sub Item 7</span></a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><a href="#"><span>Help</span></a></li>
+                    <li class="last"><a href="#"><span>Contacts</span></a></li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td><center>@RenderBody()</center></td>
+    </tr>
+
+    <tr>
+        <td style="text-align:center; background-color:maroon; color:white; width:100%">
+            <br>copyright PyarMohammad.......all right reserved
+        </td>
+    </tr>
+</table>
+
+
+

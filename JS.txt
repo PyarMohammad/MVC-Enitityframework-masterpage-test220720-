@@ -1,0 +1,132 @@
+$(document).ready(function () {
+    BindCountry();
+    $("#ddlstate").prop("disabled", true);
+    ShowData();
+});
+
+
+function Clear() {
+    $("#txtname").val("");
+    $("#txtage").val("");
+    $("#ddlcountry").val("0");
+    $("#ddlstate").val("0");
+    $("input:radio").attr("checked", false);
+    $("#txtdob").val("");
+    $("#txtdob").val("");
+    $("#txtemail").val("");
+    $("#txtpwd").val("");
+    $("#txtconpwd").val("");
+    $("#btnsave").val("Save");
+    IDD = 0;
+}
+
+function BindCountry() {
+    $.ajax({
+        url: 'Student/DisplayCountry',
+        type: 'post',
+        data: {},
+        async: false,
+        success: function (data) {
+            for (var i = 0; i < data.length; i++) {
+                $("#ddlcountry").append($('<option/>').attr("value", data[i].cid).text(data[i].cname));
+            }
+        },
+        error: function () {
+            alert("Country not found!");
+        }
+    });
+}
+
+function BindState() {
+    $.ajax({
+        url: 'Student/DisplayState',
+        type: 'post',
+        data: { CID: $("#ddlcountry").val() },
+        async: false,
+        success: function (data) {
+            $("#ddlstate").prop("disabled", false);
+            $("#ddlstate").empty();
+            $("#ddlstate").append($('<option/>').attr("value", 0).text("--Select--"));
+            for (var i = 0; i < data.length; i++) {
+                $("#ddlstate").append($('<option/>').attr("value", data[i].sid).text(data[i].sname));
+            }
+        },
+        error: function () {
+            alert("State not choose!");
+        }
+    });
+}
+
+
+function SaveData() {
+    $.ajax({
+        url: 'Student/InsertUpdate',
+        data: { id: IID, name: $("#txtname").val(), age: $("#txtage").val(), ctr: $("#ddlcountry").val(), str: $("#ddlstate").val(), gender: $('input:radio[name=Gender]:checked').val(), dob: $("#txtdob").val(), email: $("#txtemail").val(), pwd: $("#txtpwd").val(), cnf_pwd: $("#txtconpwd").val() },
+        success: function () {
+            ShowData();
+            Clear();
+        },
+        error: function () {
+            alert("Data not insert!");
+        }
+    });
+}
+
+function ShowData() {
+    $.ajax({
+        url: 'Student/Show',
+        data: {},
+        success: function (data) {
+            //  data = JSON.parse(data);  ise lagane par error aayega iska use nahi hota entity main
+            $("#tbl").find('tr:gt(0)').remove();
+            for (var i = 0; i < data.length; i++) {
+                $("#tbl").append('<tr> <td>' + data[i].name + '</td> <td>' + data[i].age + ' </td> <td>' + data[i].cname + ' </td> <td>' + data[i].sname + ' </td> <td>' + (data[i].gender == 1 ? "male" : data[i].gender == 2 ? "female" : "other") + ' </td> <td>' + data[i].dob + ' </td> <td>' + data[i].email + ' </td> <td>' + data[i].pwd + ' </td> <td>' + data[i].cnf_pwd + ' </td> <td><input type="button" id="btndelete" value="DELETE" onclick= "DeleteData(' + data[i].id + ')" /></td>  <td><input type="button" id="btnedit" value="Edit" onclick= "EditData(' + data[i].id + ')" />  </td> <tr>');
+            }
+        },
+        error: function () {
+            alert("Data not show!");
+        }
+    });
+}
+
+function DeleteData(X) {
+    debugger;
+    $.ajax({
+        url: 'Student/Delete',
+        data: { id: X },
+        success: function () {
+            ShowData();
+            Clear();
+        },
+        error: function () {
+            alert("Data not delete!");
+        }
+    });
+}
+
+var IID = 0;
+
+function EditData(id) {
+    $.ajax({
+        url: 'Student/Edit',
+        data: { id: id },
+        async: false,
+        success: function (data) {
+            $("#txtname").val(data[0].name);
+            $("#txtage").val(data[0].age);
+            $("#ddlcountry").val(data[0].ctr);
+            BindState();
+            $("#ddlstate").val(data[0].str);
+            $('input:radio[name=Gender][value=' + data[0].gender + ']').prop("checked", true);
+            $("#txtdob").val(data[0].dob);
+            $("#txtemail").val(data[0].email);
+            $("#txtpwd").val(data[0].pwd);
+            $("#txtconpwd").val(data[0].cnf_pwd);
+            $("#btnsave").val("UPDATE");
+            IID = id;
+        },
+        error: function () {
+            alert("Data not edit!");
+        }
+    });
+}

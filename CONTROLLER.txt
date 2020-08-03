@@ -1,0 +1,65 @@
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace Entity_Frame_Work_23720.Controllers
+{
+    public class StudentController : Controller
+    {
+        Entity_Frame_Work_23720Entities db = new Entity_Frame_Work_23720Entities();
+        tblStudent obj = new tblStudent();
+        public ActionResult Create()
+        {
+            return View();
+        }
+        public JsonResult DisplayCountry()
+        {
+            var data = (from a in db.tblCountries select a).ToList();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult DisplayState(int CID)
+        {
+            var data = (from a in db.tblStates where a.cid == CID select a).ToList();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+        public void InsertUpdate(tblStudent obj)
+        {
+            if (obj.id > 0)
+            {
+                db.Entry(obj).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            else
+            {
+                db.tblStudents.Add(obj);
+                db.SaveChanges();
+            }
+        }
+
+        public JsonResult Show()
+        {
+            var data = (from a in db.tblStudents
+                        join b in db.tblCountries
+                            on a.ctr equals b.cid
+                        join c in db.tblStates
+                        on a.str equals c.sid
+                        select new { a.id, a.name, a.age, b.cname, c.sname, a.gender, a.dob, a.email, a.pwd, a.cnf_pwd }).ToList();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        public void Delete(tblStudent obj)
+        {
+            var data = db.tblStudents.Find(obj.id);
+            db.tblStudents.Remove(data);
+            db.SaveChanges();
+        }
+        public JsonResult Edit(tblStudent obj)
+        {
+            var data = (from a in db.tblStudents where a.id == obj.id select a).ToList();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+    }
+}
